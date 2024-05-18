@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RagnarockWebApp.Data;
+using RagnarockWebApp.Models;
 using WebAppWithDatabase.Models;
 
 namespace RagnarockWebApp.Pages.Users
@@ -13,10 +15,12 @@ namespace RagnarockWebApp.Pages.Users
     public class CreateModel : PageModel
     {
         private readonly RagnarockWebApp.Data.RagnarockWebAppContext _context;
+        private readonly IPwdHasher _hasher;
 
-        public CreateModel(RagnarockWebApp.Data.RagnarockWebAppContext context)
+        public CreateModel(RagnarockWebApp.Data.RagnarockWebAppContext context, IPwdHasher hasher)
         {
             _context = context;
+            _hasher = hasher;
         }
 
         public IActionResult OnGet()
