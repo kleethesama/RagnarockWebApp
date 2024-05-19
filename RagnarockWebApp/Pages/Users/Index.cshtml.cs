@@ -26,8 +26,11 @@ namespace RagnarockWebApp.Pages.Users
         public async Task OnGetAsync()
         {
             User = await _context.User.ToListAsync();
+
             var hasher = new PwdHasher();
-            Debug.Assert(hasher.GetHash("qwe") == User[0].Password);
+            string myActualPassword = "qwe";
+            string passwordInDatabase = User[0].Password ?? throw new NullReferenceException("This password does not exist.");
+            Debug.Assert(hasher.GetHash(myActualPassword) == passwordInDatabase);
         }
     }
 }
