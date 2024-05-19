@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RagnarockWebApp.Data;
-using RagnarockWebApp.Models;
+using RagnarockWebApp.Interfaces;
 using WebAppWithDatabase.Models;
 
 namespace RagnarockWebApp.Pages.Users
@@ -15,7 +15,7 @@ namespace RagnarockWebApp.Pages.Users
     public class CreateModel : PageModel
     {
         private readonly RagnarockWebApp.Data.RagnarockWebAppContext _context;
-        private readonly IPwdHasher _hasher;
+        private readonly RagnarockWebApp.Interfaces.IPwdHasher _hasher;
 
         public CreateModel(RagnarockWebApp.Data.RagnarockWebAppContext context, IPwdHasher hasher)
         {
@@ -38,6 +38,8 @@ namespace RagnarockWebApp.Pages.Users
             {
                 return Page();
             }
+
+            User.Password = _hasher.GetHash(User.Password);
 
             _context.User.Add(User);
             await _context.SaveChangesAsync();

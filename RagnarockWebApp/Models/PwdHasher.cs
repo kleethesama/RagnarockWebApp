@@ -1,17 +1,11 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using RagnarockWebApp.Interfaces;
 
 namespace RagnarockWebApp.Models
 {
     public class PwdHasher : IPwdHasher
     {
-        public string UserPwdInput { get; private set; }
-
-        public PwdHasher(string userPwdInput)
-        {
-            UserPwdInput = userPwdInput;
-        }
-
         public string GetHash(string userPwdInput) 
         {
             using var hasher = SHA512.Create();
@@ -32,28 +26,6 @@ namespace RagnarockWebApp.Models
 
             // Return the hexadecimal string.
             return sBuilder.ToString();
-        }
-    }
-
-    public class PwdVerifier
-    {
-        public string UserPwdInput { get; private set; }
-        public IPwdHasher Hasher { get; }
-
-        public PwdVerifier(IPwdHasher hasher)
-        {
-            Hasher = hasher;
-        }
-
-        public bool VerifyHash(string userPwdInput, string hash)
-        {
-            // Hash the input.
-            var hashOfInput = Hasher.GetHash(userPwdInput);
-
-            // Create a StringComparer an compare the hashes.
-            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-
-            return comparer.Compare(hashOfInput, hash) == 0;
         }
     }
 }
