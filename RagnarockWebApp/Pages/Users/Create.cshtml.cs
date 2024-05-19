@@ -39,7 +39,7 @@ namespace RagnarockWebApp.Pages.Users
                 return Page();
             }
 
-            User.Password = _hasher.GetHash(User.Password);
+            User.Password = _hasher.GetHash(User.Password ?? throw new NullReferenceException("User password input is null!"));
 
             _context.User.Add(User);
             await _context.SaveChangesAsync();

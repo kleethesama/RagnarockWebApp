@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<IPwdHasher, PwdHasher>();
+builder.Services.AddTransient<IPwdHasher, PwdHasher>();
 builder.Services.AddDbContext<RagnarockWebAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RagnarockWebAppContext") ?? throw new InvalidOperationException("Connection string 'RagnarockWebAppContext' not found.")));
 
