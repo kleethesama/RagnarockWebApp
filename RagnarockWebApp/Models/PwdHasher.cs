@@ -9,6 +9,7 @@ namespace RagnarockWebApp.Models
         // THIS IS NOT the right way to password hashing, just a showcase of it.
         // A real implementation should use: https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.passwordhasher-1?view=aspnetcore-8.0
         // Read more here: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-8.0
+        // This method is code used in the example from Microsoft: https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm.computehash?view=net-8.0
         public string GetHash(string userPwdInput) 
         {
             using var hasher = SHA512.Create();
