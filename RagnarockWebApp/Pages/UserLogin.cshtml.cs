@@ -39,25 +39,17 @@ namespace RagnarockWebApp.Pages
             }
 
             var users = from u in _context.User select u;
-            var userSearch = users.Where(s => s.Username.Contains(UserInput.Username));
+            var userSearch = users.Where(s => s.Username.Contains(UserInput.Username)); // This search is supposedly case insensitive.
             var usersFound = await userSearch.ToListAsync();
 
-            //Users = await _context.User.ToListAsync();
-
-
-            //SignIn
-            //foreach (User user in Users)
-            //{
-            //    if (UserInput.Username.ToLower() == user.Username.ToLower())
-            //    {
-            //        bool isPasswordCorrect = _verifier.VerifyHash(UserInput.Password, user.Password);
-            //        if (isPasswordCorrect)
-            //        {
-            //            _context.User.
-            //            this.SignIn();
-            //        }
-            //    }
-            //}
+            if (usersFound.Any())
+            {
+                bool isPasswordCorrect = _verifier.VerifyHash(UserInput.Password, usersFound[0].Password);
+                if (isPasswordCorrect)
+                {
+                    this.SignIn(usersFound, false);
+                }
+            }
 
             //User.Password = _hasher.GetHash(User.Password ?? throw new NullReferenceException("User password input is null!"));
 
