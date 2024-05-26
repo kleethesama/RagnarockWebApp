@@ -47,7 +47,7 @@ namespace RagnarockWebApp.Pages
                 bool isPasswordCorrect = _verifier.VerifyHash(UserInput.Password, usersFound[0].Password);
                 if (isPasswordCorrect)
                 {
-                    this.SignIn(usersFound, false);
+                    //this.SignIn(usersFound, false);
                 }
             }
 
