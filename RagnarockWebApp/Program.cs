@@ -5,14 +5,28 @@ using Microsoft.Extensions.DependencyInjection;
 using RagnarockWebApp.Data;
 using RagnarockWebApp.Interfaces;
 using RagnarockWebApp.Models;
+using System.Security.Claims;
+using WebAppWithDatabase.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RegisteredUser", policy => policy.RequireClaim("Username"));
+});
 builder.Services.AddTransient<IPwdHasher, PwdHasher>();
 builder.Services.AddDbContext<RagnarockWebAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RagnarockWebAppContext") ?? throw new InvalidOperationException("Connection string 'RagnarockWebAppContext' not found.")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Forbidden/";
+});
 
 var app = builder.Build();
 
@@ -29,8 +43,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapDefaultControllerRoute();
 
 app.Run();
