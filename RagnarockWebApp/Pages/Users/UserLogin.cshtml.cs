@@ -109,8 +109,8 @@ namespace RagnarockWebApp.Pages.Users
             //_logger.LogInformation("User {Email} logged in at {Time}.",
             //    user.Email, DateTime.UtcNow);
 
-            //return LocalRedirect(Pages.IndexModel);
-            return RedirectToPage("./Index");
+            return RedirectToLocal(returnUrl);
+            //return RedirectToPage("./Index");
         }
 
             //User.Password = _hasher.GetHash(User.Password ?? throw new NullReferenceException("User password input is null!"));
@@ -145,6 +145,18 @@ namespace RagnarockWebApp.Pages.Users
                 }
             }
             return null;
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

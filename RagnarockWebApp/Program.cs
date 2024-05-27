@@ -15,9 +15,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("RegisteredUser", policy => policy.RequireClaim("Username"));
+    options.AddPolicy("RegisteredUser", policy => policy.RequireClaim("User"));
 });
 builder.Services.AddTransient<IPwdHasher, PwdHasher>();
+builder.Services.AddTransient<PwdVerifier>();
 builder.Services.AddDbContext<RagnarockWebAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RagnarockWebAppContext") ?? throw new InvalidOperationException("Connection string 'RagnarockWebAppContext' not found.")));
 
@@ -26,6 +27,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.SlidingExpiration = true;
     options.AccessDeniedPath = "/Forbidden/";
+    options.LoginPath = "/Users/Userlogin";
 });
 
 var app = builder.Build();
