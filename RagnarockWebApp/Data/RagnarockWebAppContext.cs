@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RagnarockWebApp.Data
 {
-    public class RagnarockWebAppContext : IdentityDbContext<User>
+    public class RagnarockWebAppContext : DbContext
     {
-        public RagnarockWebAppContext (DbContextOptions options) : base(options)
+        public RagnarockWebAppContext (DbContextOptions options)
+            : base(options)
         {
         }
+        public DbSet<WebAppWithDatabase.Models.User> User { get; set; } = default!;
     }
 }
