@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RagnarockWebApp.Data;
+using RagnarockWebApp.Interfaces;
+using RagnarockWebApp.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IPwdHasher, PwdHasher>();
 builder.Services.AddDbContext<RagnarockWebAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("RagnarockWebAppContext") ?? throw new InvalidOperationException("Connection string 'RagnarockWebAppContext' not found.")));
 
