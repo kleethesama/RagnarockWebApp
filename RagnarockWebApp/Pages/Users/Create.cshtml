@@ -3,14 +3,13 @@
 
 @{
     ViewData["Title"] = "Create An Account";
+    // Layout = "_Layout";
 }
 
 <h1>Create Account</h1>
-
-<h4>User</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row text-black">
+    <div class="col-md-4 bg-dark bg-opacity-75 rounded-3">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -34,6 +33,7 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <br />
         </form>
     </div>
 </div>
@@ -44,10 +44,6 @@
         <button type="submit" value="Create" class="btn btn-primary">Register</button>
     </form>
 </div> *@
-<br>
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
